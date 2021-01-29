@@ -59,7 +59,8 @@ class PagesController extends Controller
         $prod = Produk::with('foto_produk_sort')->where('id_jenis_merchant', $id);
         $produk = $prod->paginate(16);
         $jenisProduk = JenisMerchant::where('id', $id)->get();
-        // return $produk;
+        $produk = Produk::with('foto_produk_sort')->paginate();
+        return $produk->items();
         return view('produk.filter', compact('produk', 'jenisProduk'));
     }
 
