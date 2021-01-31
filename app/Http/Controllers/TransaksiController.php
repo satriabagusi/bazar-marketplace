@@ -6,6 +6,7 @@ use App\Merchant;
 use App\Pembeli;
 use App\Produk;
 use App\Transaksi;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -111,32 +112,16 @@ class TransaksiController extends Controller
         $produk = Produk::select('nama_produk')->where('id', $request->id)->first();
         $merchant = Merchant::select('nama_merchant','no_hp_merchant')->where('id', $request->id_merchant)->first();
 
-        // KODE TRANSAKSI
-        $date = date('dmY');
-        $chekTransaction = Transaksi::all()->first();
-        if(count((array)$chekTransaction) > 0){
-            $get_id = Transaksi::select('id')->get()->last()->id + 1;
-        }else{
-            $get_id = 1;
-        }
-        $id = "00".$get_id;
-        if($get_id > 9){
-            if ($get_id <= 99 ) {
-                $id = substr($id, 1);
-            }elseif ($get_id <= 999) {
-                $id = substr($id, 2);
-            }elseif ($get_id <= 9999) {
-                $id = substr($id, 3);
-            }elseif($get_id > 9999){
-                $id = $get_id;
-            }
-        }
-        $no_transaksi =  $date.$id ;
         $total = str_replace(".", "", $request['total_transaksi']);
         // return floor($total/5000);
 
         $merchant = Merchant::find($request->id_merchant);
-        DB::transaction(function() use($request, $no_transaksi, $produk, $merchant, $total) {
+        DB::transaction(function() use($request, $produk, $merchant, $total) {
+
+            // KODE TRANSAKSI
+        $date = date('dmY');
+        $rand = rand(1,9999);
+        $no_transaksi =  $date.'00'.str_pad($rand,4,0,STR_PAD_LEFT);
 
             Transaksi::create([
                 'kode_transaksi' => $no_transaksi,
@@ -218,8 +203,9 @@ class TransaksiController extends Controller
 
 
         if(Auth::guard('merchant')->check()){
+            // dd($request->file());
             $request->validate([
-                'bukti_pengiriman' => 'required|image|mimes:jpeg,png,jpg,svg',
+                'bukti_pengiriman' => 'required|mimes:jpeg,png,jpg,svg',
             ]);
 
             if ($request->hasFile('bukti_pengiriman')) {
@@ -239,12 +225,18 @@ class TransaksiController extends Controller
             return back()->with('status','Berhasil upload bukti pengiriman');
 
         }elseif(Auth::guard('pembeli')->check()){
-            $status = Transaksi::select('status_transaksi')->where('id', $request->id)->get();
+            $status = Transaksi::select('status_transaksi')->where('id', $request->id)->first();
+            // return $status;
 
-            if($status == 0){
+            // return $request->file('bukti_transfer');
+
+            if($status->status_transaksi == 0){
+
+                // dd($request);
                 $request->validate([
-                    'bukti_transfer' => 'required|image|mimes:jpeg,png,jpg,svg',
+                    'bukti_transfer' => 'required|mimes:jpeg,png,jpg,svg',
                 ]);
+
 
                 if ($request->hasFile('bukti_transfer')) {
                     $image = $request->file('bukti_transfer');
@@ -298,9 +290,17 @@ class TransaksiController extends Controller
                 'stock' => $produk->stock + $transaksi->total_produk,
             ]);
             return back()->with('status', 'Pesanan '.$transaksi->kode_transaksi.' dibatalkan');
+        }elseif(Auth::guard('superuser')->check()){
+            Transaksi::destroy($transaksi->id);
+            $produk = Produk::where('id', $transaksi->id_produk)->first();
+            Produk::where('id', $transaksi->id_produk)->update([
+                'stock' => $produk->stock + $transaksi->total_produk,
+            ]);
+            return back()->with('status', 'Pesanan '.$transaksi->kode_transaksi.' dibatalkan');
         }else{
             return redirect('/');
         }
+
         // return $transaksi;
     }
 
@@ -324,7 +324,7 @@ class TransaksiController extends Controller
 
     public function detailTransaksi($kode_transaksi){
         $transaksi =  Transaksi::where('kode_transaksi', $kode_transaksi)->get();
-        // return $transaksi->kode_transaksi;
+        // return $transaksi->status_transaksi;
         if(Auth::guard('merchant')->check()){
             $transaksi = Transaksi::where('kode_transaksi', $kode_transaksi)->get();
             return view('merchant.transaksi.detail-transaksi', compact('transaksi'));
@@ -332,7 +332,6 @@ class TransaksiController extends Controller
         }elseif(Auth::guard('pembeli')->check()){
             $transaksi = Transaksi::where('kode_transaksi', $kode_transaksi)->get();
             return view('pembeli.transaksi.detail-transaksi', compact('transaksi'));
-
         }elseif(Auth::guard('superuser')->check()){
             $transaksi = Transaksi::where('kode_transaksi', $kode_transaksi)->get();
             return view('superuser.transaksi.detail-transaksi', compact('transaksi'));

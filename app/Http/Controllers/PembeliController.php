@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\KategoriPembeli;
 use App\Pembeli;
 use App\Transaksi;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class PembeliController extends Controller
 {
@@ -54,7 +56,7 @@ class PembeliController extends Controller
             'fungsi' => 'required',
             'bagian' => 'required',
             'id_kategori_pembeli' => 'min:1|not_in:0',
-            'email' => 'required',
+            'email' => 'required|unique:pembeli',
             'password' => 'min:4|required|confirmed',
             'no_hp_pembeli' => 'required',
             'alamat' => 'required'
@@ -106,9 +108,10 @@ class PembeliController extends Controller
     public function dashboard(){
         if(Auth::guard('pembeli')->check()){
             $pembeli = Pembeli::where('id', Auth::guard('pembeli')->user()->id)->first();
-            // return $merchant;
-            $poin = Transaksi::select(DB::raw('SUM(total_transaksi) as total_transaksi'))->where('status_transaksi', 3)->where('id_merchant', $pembeli->id)->get();
-            $poin = floor($poin[0]->total_transaksi/5000);
+            // return $pembeli->id;
+            $poin = Transaksi::where('id_pembeli', $pembeli->id)->where('status_transaksi', 3)->sum('total_transaksi');
+            $poin = floor($poin/5000);
+            // return $poin;
             Pembeli::where('id', $pembeli->id)
                     ->update([
                         'point_pembeli_pending' => $poin,
@@ -161,7 +164,16 @@ class PembeliController extends Controller
      */
     public function update(Request $request, Pembeli $pembeli)
     {
-        //
+        if($request){
+            Pembeli::where('id', $request->id)
+                    ->update([
+                        'password' => Hash::make($request->password),
+                        'token' => '',
+                    ]);
+            return redirect('/pembeli/login');
+        }else{
+            return redirect('/');
+        }
     }
 
     /**
@@ -173,5 +185,54 @@ class PembeliController extends Controller
     public function destroy(Pembeli $pembeli)
     {
         //
+    }
+
+    public function lupaPassword(){
+        $length = 55;
+        $token = substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklkmnopqrstuvwxyz'),1,$length);
+
+        return view('pembeli.lupa-password', compact('token'));
+    }
+
+    public function sendToken(Request $request){
+        // return $request->all();
+        $pembeli = Pembeli::where('email', $request->email)->first();
+        if($pembeli){
+            Pembeli::where('email', $request->email)->update([
+                'token' => $request->token,
+            ]);
+
+            try{
+                $pesan = '<b>Permintaan Reset Password</b><br>
+                            Klik link untuk mengakses Reset Password<br>
+                            <a href='.env('APP_URL').'/pembeli/reset-password/token='.$request->token.'>Reset Password</a>';
+                Mail::send([], [], function ($message) use($pesan, $request) {
+                    $message->to($request->email)
+                    ->subject('Permintaan Reset Password')
+                    ->setBody($pesan, 'text/html');
+                });
+            }catch (Exception $e){
+                return response (['status' => false,'errors' => $e->getMessage()]);
+            }
+
+            return view('pembeli.reset-password', compact('pembeli'));
+
+        }else{
+
+            return redirect()->back()->with('status', 'Email tidak terdaftar');
+        }
+
+    }
+
+    public function passwordReset($token){
+        // return $token;
+        $pembeli = Pembeli::where('token', $token)->first();
+        // return $token_merchant;
+        if($pembeli){
+            // return "token sesuai";
+            return view('pembeli.reset', compact('pembeli'));
+        }else{
+            return view('pembeli.reset');
+        }
     }
 }

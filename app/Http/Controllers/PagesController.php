@@ -21,8 +21,9 @@ class PagesController extends Controller
 
         $jenisMerchant = JenisMerchant::all();
         $daftarMerchant = Merchant::all()->take(5);
-        $produk = Produk::with('foto_produk_sort')->orderBy('created_at', 'asc')->paginate();
-        // return $daftarMerchant;
+        $produk = Produk::with('foto_produk_sort')->orderBy('updated_at', 'asc')->paginate(16);
+        // $produk = array();
+        // $produk = Produk::with('foto_produk_sort')->where('id', 93)->get();
         // return $produk;
         return view('index', compact('jenisMerchant', 'produk', 'daftarMerchant'));
     }
@@ -59,8 +60,9 @@ class PagesController extends Controller
         $prod = Produk::with('foto_produk_sort')->where('id_jenis_merchant', $id);
         $produk = $prod->paginate(16);
         $jenisProduk = JenisMerchant::where('id', $id)->get();
-        $produk = Produk::with('foto_produk_sort')->paginate();
-        return $produk->items();
+        // $produk = Produk::with('foto_produk_sort')->paginate();
+        // $produk = Produk::with('foto_produk_sort')->where('id', 139)->get();
+        // return $produk;
         return view('produk.filter', compact('produk', 'jenisProduk'));
     }
 
@@ -111,5 +113,12 @@ class PagesController extends Controller
         // return $produk;
         // return $produk;
         return view('produk.cari', compact('produk', 'nama_produk'));
+    }
+
+    public function cariMerchant(Request $request){
+        $merchant = Merchant::where('nama_merchant', 'like', '%'.$request->merchant.'%')->paginate(15);
+        $nama_merchant = $request->merchant;
+        // return $merchant;
+        return view('produk.cari-merchant', compact('merchant', 'nama_merchant'));
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Merchant;
+use App\Pembeli;
 use App\Produk;
 use App\SuperUser;
 use App\Transaksi;
@@ -195,10 +196,28 @@ class SuperUserController extends Controller
         }
     }
 
+    public function daftarPembeli(){
+        $pembeli = Pembeli::paginate(15);
+        // return $merchant;
+        if(Auth::guard('superuser')->check()){
+            // return $pembeli;
+            return view('superuser.akun.daftar-pembeli', compact('pembeli'));
+        }else{
+            return redirect('/superuser/login');
+        }
+    }
+
 
     public function __hapusAkun(Merchant $merchant){
         Produk::where('id_merchant', $merchant->id)->delete();
         Merchant::destroy($merchant->id);
         return back()->with('status', 'Merchant '.$merchant->nama_merchant.' berhasil dihapus !');
+    }
+
+    public function __hapusPembeli(Pembeli $pembeli){
+        // Produk::where('id_merchant', $merchant->id)->delete();
+        Transaksi::where('id_pembeli', $pembeli->id)->delete();
+        Pembeli::destroy($pembeli->id);
+        return back()->with('status', 'Merchant '.$pembeli->nama_pembeli.' berhasil dihapus !');
     }
 }

@@ -5,6 +5,11 @@
 <!-- Page Content -->
 <div class="container">
 
+    <div class="row mt-4">
+        <div class="col">
+            <span><a href="/" class="btn btn-primary btn-sm rounded-circle"><i class="fas fa-arrow-left"></i></a> Kembali ke Halaman Utama</span>
+        </div>
+    </div>
     <div class="row my-4">
         <div class="col-md-12 col-xs-auto">
             <div class="card mb-3 border-0" style="">
@@ -40,7 +45,11 @@
                         {{-- {{ $item->Foto_produk->url_foto }} --}}
                         <div class="col-xs-3 col-md-3 mb-4">
                             <div class="card h-100 shadow-sm">
-                                <img class="card-img-top" src="{{url('/gambar-produk/'.$item->foto_produk_sort->url_foto)}}" alt=""  style="width: 700; height: 400;"></a>
+                                @if (empty($item->foto_produk_sort))
+                   <img class="card-img-top" src="{{url('/gambar-produk/no-image.png')}}" alt=""  style="width: 700; height: 400;">
+                   @else
+                   <img class="card-img-top" src="{{url('/gambar-produk/'.$item->foto_produk_sort->url_foto)}}" alt=""  style="width: 700; height: 400;">
+                   @endif
                                 <div class="card-body">
                                     <h4 class="card-title">
                                         <a href="/produk/detail/{{$item->id}}">{{$item->nama_produk}}</a>

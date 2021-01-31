@@ -12,11 +12,16 @@
     <div id="fotoProduk" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner shadow rounded-lg">
             <div class="carousel-inner">
+                @if (empty($foto_produk))
+                <img class="card-img-top" src="{{url('/gambar-produk/no-image.png')}}" alt=""  style="width: 700; height: 400;">
+
+                @else
                 @foreach($foto_produk as $key => $foto)
                 <div class="carousel-item {{$key == 0 ? 'active' : '' }}">
                     <img src="{{url('/gambar-produk/'.$foto->url_foto)}}" class="d-block w-100"  alt="...">
                 </div>
                 @endforeach
+                @endif
             </div>
             {{-- @foreach ($foto_produk as $item)
                 <div class="carousel-item active">
@@ -115,29 +120,26 @@
     <div class="p-2 mt-4 border-top">
       <h4 class="">Deskripsi Produk</h4>
       <div class="row my-5">
-
-        <div class="col ">
-
-          <div class="d-flex flex-xl-column justify-content-between">
-            <div class="p-2 border-bottom"><span class="text-muted">Produk dijual oleh</span></div>
-            <div class="p-2 border-bottom mt-5"><span class="text-muted">Deskripsi Produk</span></div>
+          <div class="col-md-6 col-xs-auto">
+              <p class="text-muted border-bottom">Produk Dijual Oleh</p>
           </div>
-
-        </div>
-
-        <div class="col">
-          <div class="d-flex flex-xl-column justify-content-between">
-            <div class="p-2 "><span class="">{{$produk->merchant_sort->nama_merchant}}</span></div>
-            <div class="p-2  mt-5"><span><textarea class="form-control" style="width: 100%!important;background-color:transparent; border: none; overflow: auto; outline: none; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; resize: none"
-              @if (strlen($produk->deskripsi) > 550)
-              rows="30"
-              @else
-              rows="15"
-              @endif
-              readonly> {{$produk->deskripsi}} </textarea></span></div>
+          <div class="col-md-6 col-xs-auto">
+              <p class="">{{$produk->merchant_sort->nama_merchant}}</p>
           </div>
-        </div>
-
+      </div>
+      <div class="row my-5">
+          <div class="col-md-6 col-xs-auto">
+              <p class="text-muted border-bottom">Produk Dijual Oleh</p>
+          </div>
+          <div class="col-md-6 col-xs-auto">
+            <textarea class="form-control" style="width: 100%!important;background-color:transparent; border: none; overflow: auto; outline: none; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; resize: none"
+            @if (strlen($produk->deskripsi) > 550)
+            rows="30"
+            @else
+            rows="15"
+            @endif
+            readonly> {{$produk->deskripsi}} </textarea>
+          </div>
       </div>
     </div>
   </div>

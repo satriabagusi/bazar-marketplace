@@ -27,6 +27,10 @@
                             <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
                             <a href="/" class="btn btn-outline-danger btn-user btn-block">Kembali</a>
                         </form>
+                        <p class="small">
+                            Lupa password akun Merchant ?
+                            <a href="/merchant/lupa-password" class="text-center">Reset Password</a>
+                        </p>
 
                         @if (Session::has('error'))
                         <div class="alert alert-danger mt-2" role="alert">
@@ -34,24 +38,24 @@
                                 <ul>
                                     {{Session::get('error')}}
                                 </ul>
-                            </li>   
+                            </li>
                         </div>
                         @endif
-                        
+
                         @if ($errors->any())
                         <div class="alert alert-danger mt-2" role="alert">
                             <li>
                                 <ul>
                                     {!! implode('', $errors->all('<li>:message</li>')) !!}
-                                </ul>   
+                                </ul>
                             </li>
                         </div>
                         @endif
                     </div>
                 </div>
             </div>
-            
-           
+
+
         </div>
     </div>
 

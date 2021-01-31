@@ -122,6 +122,14 @@ $(document).ready(function(){
 
 });
 
+$(document).ready(function(){
+
+    $('#hapusPembeliModal').on('show.bs.modal', function (event) {
+        var id = $(event.relatedTarget).data('id');
+        $(this).find("#btn-hapus").attr('href', '/superuser/dashboard/hapus-akun-pembeli/'+id);
+      });
+
+});
 
 
 $(document).ready(function(){

@@ -11,6 +11,7 @@
                 <span><a href="/" class="btn btn-primary rounded-circle"><i class="fas fa-arrow-left"></i></a></span>
                 <span class="">Menampilkan hasil pencarian </span>
                 <span class="text-italic font-weight-bold">"{{$nama_produk}}"</span>
+                <span>Atau mencari nama merchant <a href="/merchant/cari/?merchant={{$nama_produk}}" class="btn btn-sm btn-outline-info"> {{$nama_produk}}</a>  ?</span>
             </span>
             {{-- <div class="list-group">
                 @foreach ($jenisMerchant as $item)
@@ -42,7 +43,11 @@
             {{-- {{ $item->Foto_produk->url_foto }} --}}
             <div class="col-lg-3 col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
-                    <img class="card-img-top" src="{{url('/gambar-produk/'.$item->foto_produk_sort->url_foto)}}" alt=""  style="width: 700; height: 400;"></a>
+                    @if (empty($item->foto_produk_sort))
+                   <img class="card-img-top" src="{{url('/gambar-produk/no-image.png')}}" alt=""  style="width: 700; height: 400;">
+                   @else
+                   <img class="card-img-top" src="{{url('/gambar-produk/'.$item->foto_produk_sort->url_foto)}}" alt=""  style="width: 700; height: 400;">
+                   @endif
                     <div class="card-body">
                         <h4 class="card-title">
                             <a href="/produk/detail/{{$item->id}}">{{$item->nama_produk}}</a>

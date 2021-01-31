@@ -34,16 +34,16 @@
 
     <div class="justify-content-md-center">
         <form class="form-inline input-group" method="GET" action="/produk/cari/?produk=">
-            <input class="form-control" type="text" name="produk" placeholder="Cari produk ..." aria-label="Search" style="width: 400px;" autocomplete="off">
+            <input class="form-control" type="text" name="produk" placeholder="Cari produk ..." aria-label="Search" style="width: 300px;" autocomplete="off">
             <div class="input-group-append">
                 <button class=" btn btn-primary " id="basic-addon2"><ion-icon name="search"></ion-icon></button>
             </div>
             {{-- <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button> --}}
         </form>
     </div>
-
-
     <div class="row">
+
+
         <div class="col-xs-auto py-2">
             @if (Auth::guard('merchant')->check() || Auth::guard('pembeli')->check())
             <div class=" ">
@@ -89,7 +89,7 @@
         </div>
 
         <div class="col-xs-auto">
-            <button class="navbar-toggler mt-3" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler mt-2 mr-5" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <ion-icon name="menu"></ion-icon>
         </div>
 

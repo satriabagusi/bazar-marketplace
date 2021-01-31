@@ -20,9 +20,9 @@
             <h3 class="my-4">Daftar Merchant</h3>
             <div class="list-group">
                 @foreach ($daftarMerchant as $item)
-                <a href="/produk/filter/kategori/id={{$item->id}}" class="list-group-item text-decoration-none" >{{$item->nama_merchant}}</a>
+                <a href="/merchant/detail/{{$item->id}}" class="list-group-item text-decoration-none" >{{$item->nama_merchant}}</a>
                 @endforeach
-                <a href="/produk/filter/merchant/" class="list-group-item text-decoration-none" >Lihat Semua Merchant</a>
+                <a href="/merchant/cari/?merchant=" class="list-group-item text-decoration-none" >Lihat Semua Merchant</a>
             </div>
 
         </div>
@@ -75,7 +75,11 @@
             {{-- {{ $item->Foto_produk->url_foto }} --}}
             <div class="col-lg-3 col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
-                    <img class="card-img-top " src="{{url('/gambar-produk/'.$item->foto_produk_sort->url_foto)}}" alt=""  style="width: 100%!important; height: 200px!important; object-fit: cover;"></a>
+                    @if (empty($item->foto_produk_sort))
+                   <img class="card-img-top" src="{{url('/gambar-produk/no-image.png')}}" alt=""  style="width: 700; height: 400;">
+                   @else
+                   <img class="card-img-top" src="{{url('/gambar-produk/'.$item->foto_produk_sort->url_foto)}}" alt=""  style="width: 700; height: 400;">
+                   @endif
                     <div class="card-body">
                         <h4 class="card-title">
                             <a href="/produk/detail/{{$item->id}}">{{$item->nama_produk}}</a>

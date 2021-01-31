@@ -144,6 +144,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Manage Akun :</h6>
                         <a class="collapse-item @yield('daftar-merchant')" href="/superuser/dashboard/daftar-merchant">Daftar Merchant</a>
+                        <a class="collapse-item @yield('daftar-pembeli')" href="/superuser/dashboard/daftar-pembeli">Daftar Pembeli</a>
                         <a class="collapse-item @yield('tambah-user')" href="/superuser/dashboard/tambah-user">Tambah Superuser</a>
                         {{-- <a class="collapse-item @yield('detail-produk')" href="cards.html">Detail Produk</a> --}}
                     </div>

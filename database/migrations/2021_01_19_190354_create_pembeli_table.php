@@ -27,6 +27,7 @@ class CreatePembeliTable extends Migration
             $table->integer('point_pembeli')->default(0);
             $table->integer('point_pembeli_pending')->default(0);
             $table->unsignedBigInteger('id_kategori_pembeli');
+            $table->string('token');
             $table->timestamps();
         });
 

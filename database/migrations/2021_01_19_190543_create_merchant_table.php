@@ -27,6 +27,7 @@ class CreateMerchantTable extends Migration
             $table->text('nama_pemilik_merchant');
             $table->unsignedBigInteger('id_kategori_merchant');
             $table->unsignedBigInteger('id_jenis_merchant');
+            $table->string('token');
             $table->timestamps();
         });
 
