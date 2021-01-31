@@ -100,9 +100,9 @@
             </div>
             <div class="card-footer">
                 <div class="d-flex justify-content-end ">
-                    @if ($item->status_transaksi == 0)
+                    {{-- @if ($item->status_transaksi == 0) --}}
                     <a href="/superuser/dashboard/transaksi/hapus/{{$item->id}}" class="btn btn-outline-danger mr-2">Hapus Transaksi</a>
-                    @endif
+                    {{-- @endif --}}
                     <a href="/merchant/dashboard/transaksi/" class="btn btn-primary">Kembali</a>
                 </div>
             </div>

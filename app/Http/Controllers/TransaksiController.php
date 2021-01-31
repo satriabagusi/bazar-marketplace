@@ -115,13 +115,20 @@ class TransaksiController extends Controller
         $total = str_replace(".", "", $request['total_transaksi']);
         // return floor($total/5000);
 
-        $merchant = Merchant::find($request->id_merchant);
-        DB::transaction(function() use($request, $produk, $merchant, $total) {
-
-            // KODE TRANSAKSI
+        // KODE TRANSAKSI
         $date = date('dmY');
         $rand = rand(1,9999);
         $no_transaksi =  $date.'00'.str_pad($rand,4,0,STR_PAD_LEFT);
+        $checkTransaksi = Transaksi::where('kode_transaksi', $no_transaksi)->first();
+        if($checkTransaksi){
+            $rand = rand(1,9999);
+            $no_transaksi =  $date.'00'.str_pad($rand,4,0,STR_PAD_LEFT);
+        }
+
+        $merchant = Merchant::find($request->id_merchant);
+        DB::transaction(function() use($request, $produk, $no_transaksi, $total) {
+
+
 
             Transaksi::create([
                 'kode_transaksi' => $no_transaksi,

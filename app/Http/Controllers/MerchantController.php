@@ -124,7 +124,7 @@ class MerchantController extends Controller
             $merchant = Merchant::where('id', Auth::guard('merchant')->user()->id)->first();
             // return $merchant;
             $poin = Transaksi::where('id_merchant', $merchant->id)->where('status_transaksi', 3)->sum('total_transaksi');
-            $poin = floor($poin/5000);
+            $poin = floor($poin/200000);
             Merchant::where('id', $merchant->id)
                     ->update([
                         'point_merchant_pending' => $poin,

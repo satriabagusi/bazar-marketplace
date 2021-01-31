@@ -21,7 +21,7 @@ class PagesController extends Controller
 
         $jenisMerchant = JenisMerchant::all();
         $daftarMerchant = Merchant::all()->take(5);
-        $produk = Produk::with('foto_produk_sort')->orderBy('updated_at', 'asc')->paginate(16);
+        $produk = Produk::with('foto_produk_sort')->orderBy('updated_at', 'desc')->paginate(16);
         // $produk = array();
         // $produk = Produk::with('foto_produk_sort')->where('id', 93)->get();
         // return $produk;
@@ -112,6 +112,7 @@ class PagesController extends Controller
         $nama_produk = $request->produk;
         // return $produk;
         // return $produk;
+        $produk->appends($request->only('produk'));
         return view('produk.cari', compact('produk', 'nama_produk'));
     }
 

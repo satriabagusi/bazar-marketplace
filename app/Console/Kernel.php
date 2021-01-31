@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        'App\Console\Commands\DeleteTransaksi',
     ];
 
     /**
@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         // $schedule->command('delete-records')->everyMinute();
+        $schedule->command('delete:transaksi')->everyMinute();
     }
 
     /**
