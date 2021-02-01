@@ -52,6 +52,16 @@
                         Harga Produk :  <span class="text-info font-weight-bold">Rp {{ number_format($item->produk->harga, 0 , ".", ".")}}
                     </div>
                 </div>
+                <div class="row mt-5">
+                    <div class="col-2">
+                        <p>Nama Pembeli : </p>
+                        <p>Alamat Pembeli : </p>
+                    </div>
+                    <div class="col">
+                        <p class="font-weight-bold"> {{$item->pembeli->nama_pembeli}}</p>
+                        <p class="">{{$item->pembeli->alamat}}</p>
+                    </div>
+                </div>
 
                 <div class="row mt-5 border-top">
                     <div class="col-12">

@@ -13,7 +13,7 @@ class Transaksi extends Model
         return $this->belongsTo('App\Pembeli', 'id_pembeli');
     }
     public function merchant(){
-        return $this->belongsToMany('App\Merchant', 'id_merchant');
+        return $this->belongsTo('App\Merchant', 'id_merchant');
     }
     public function produk(){
         return $this->belongsTo('App\Produk', 'id_produk');

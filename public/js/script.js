@@ -18,7 +18,7 @@ $(document).ready(function(){
 
     var stock = $('#jumlahPesanan').val();
     var total_transaksi = $('#total_transaksi').cleanVal();
-    var max_stock = 10;
+    var max_stock = $('#stock').html();
     $("#tambah_stock").click(function(){
         stock++;
         let total = total_transaksi * stock;

@@ -53,6 +53,16 @@
                     </div>
                 </div>
 
+                <div class="row mt-5">
+                    <div class="col-2">
+                        <p>Nama Pembeli : </p>
+                        <p>Alamat Pembeli : </p>
+                    </div>
+                    <div class="col">
+                        <p class="font-weight-bold"> {{$item->merchant->nama_merchant}}</p>
+                    </div>
+                </div>
+
                 <div class="row mt-5 border-top">
                     <div class="col-12">
                         <p>Pembayaran</p>
