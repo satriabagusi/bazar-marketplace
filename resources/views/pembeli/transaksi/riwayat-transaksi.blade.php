@@ -70,7 +70,11 @@
                     <div class="col">
                         <div class="row">
                             <div class="col-4">
-                                <img src="{{url('/gambar-produk/'.$item->foto_produk->url_foto)}}" alt="" class="img-fluid shadow-sm rounded" width="120px">
+                                @if (empty($item->foto_produk))
+                                    <img class="card-img-top" src="{{url('/gambar-produk/no-image.png')}}" alt=""  class="img-fluid shadow-sm rounded" width="120px"></a>
+                                @else
+                                    <img src="{{url('/gambar-produk/'.$item->foto_produk->url_foto)}}" alt="" class="img-fluid shadow-sm rounded" width="120px">
+                                @endif
                             </div>
                             <div class="col">
                                 <div class="d-flex flex-column bd-highlight mb-3">

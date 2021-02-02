@@ -40,11 +40,13 @@ class TransaksiController extends Controller
             if($request->status == 2){
                 $id_merchant = Auth::guard('merchant')->user()->id;
                 $transaksi = Transaksi::with(['foto_produk', 'produk'])->where('id_merchant', $id_merchant)->where('status_transaksi', '=', 3)->orderBy('created_at', 'desc')->paginate(10);
+                $transaksi->appends($request->only('status'));
                 // return $transaksi;
                 return view('merchant.transaksi.riwayat-transaksi', compact('transaksi'));
             }elseif($request->status == 1){
                 $id_merchant = Auth::guard('merchant')->user()->id;
                 $transaksi = Transaksi::with(['foto_produk', 'produk'])->where('id_merchant', $id_merchant)->where('status_transaksi', '<', 3)->orderBy('created_at', 'desc')->paginate(10);
+                $transaksi->appends($request->only('status'));
                 // return $transaksi;
                 return view('merchant.transaksi.riwayat-transaksi', compact('transaksi'));
             }else{
@@ -57,25 +59,30 @@ class TransaksiController extends Controller
             if($request->status == 2){
                 $id_pembeli = Auth::guard('pembeli')->user()->id;
                 $transaksi = Transaksi::with(['foto_produk', 'produk'])->where('id_pembeli', $id_pembeli)->where('status_transaksi', '=', 3)->orderBy('created_at', 'desc')->paginate(10);
+                $transaksi->appends($request->only('status'));
                 // return $transaksi;
                 return view('pembeli.transaksi.riwayat-transaksi', compact('transaksi'));
             }elseif($request->status == 1 ){
                 $id_pembeli = Auth::guard('pembeli')->user()->id;
                 $transaksi = Transaksi::with(['foto_produk', 'produk'])->where('id_pembeli', $id_pembeli)->where('status_transaksi', '<', 3)->orderBy('created_at', 'desc')->paginate(10);
+                $transaksi->appends($request->only('status'));
                 // return $transaksi;
                 return view('pembeli.transaksi.riwayat-transaksi', compact('transaksi'));
             }else{
                 $id_pembeli = Auth::guard('pembeli')->user()->id;
                 $transaksi = Transaksi::with(['foto_produk', 'produk'])->where('id_pembeli', $id_pembeli)->orderBy('created_at', 'desc')->paginate(10);
+                $transaksi->appends($request->only('status'));
                 // return $transaksi;
                 return view('pembeli.transaksi.riwayat-transaksi', compact('transaksi'));
             }
         } elseif(Auth::guard('superuser')->check()){
             if($request->status == 2){
                 $transaksi = Transaksi::orderBy('created_at', 'desc')->where('status_transaksi', '=', 3)->paginate(10);
-            return view('superuser.transaksi.riwayat-transaksi', compact('transaksi'));
+                $transaksi->appends($request->only('status'));
+                return view('superuser.transaksi.riwayat-transaksi', compact('transaksi'));
             }elseif($request->status == 1 ){
                 $transaksi = Transaksi::orderBy('created_at', 'desc')->where('status_transaksi', '<', 3)->paginate(10);
+                $transaksi->appends($request->only('status'));
                 return view('superuser.transaksi.riwayat-transaksi', compact('transaksi'));
             }else{
                 $transaksi = Transaksi::orderBy('created_at', 'desc')->paginate(10);

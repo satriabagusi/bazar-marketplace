@@ -9,9 +9,9 @@
 <div class="row mb-5">
     <div class="col">
         <p>Filter Transaksi</p>
-        <a href="/pembeli/dashboard/transaksi" class="btn btn-primary">Semua Transaksi</a>
-        <a href="/pembeli/dashboard/transaksi/?status=1" class="btn btn-primary">Transaksi Belum Selesai</a>
-        <a href="/pembeli/dashboard/transaksi/?status=2" class="btn btn-primary">Transaksi Selesai</a>
+        <a href="/superuser/dashboard/transaksi" class="btn btn-primary">Semua Transaksi</a>
+        <a href="/superuser/dashboard/transaksi/?status=1" class="btn btn-primary">Transaksi Belum Selesai</a>
+        <a href="/superuser/dashboard/transaksi/?status=2" class="btn btn-primary">Transaksi Selesai</a>
     </div>
 </div>
 
@@ -68,7 +68,11 @@
                     <div class="col">
                         <div class="row">
                             <div class="col-4">
-                                <img src="{{url('/gambar-produk/'.$item->foto_produk->url_foto)}}" alt="" class="img-fluid shadow-sm rounded" width="120px">
+                                @if (empty($item->foto_produk))
+                                    <img class="card-img-top" src="{{url('/gambar-produk/no-image.png')}}" alt=""  class="img-fluid shadow-sm rounded" width="120px"></a>
+                                @else
+                                    <img src="{{url('/gambar-produk/'.$item->foto_produk->url_foto)}}" alt="" class="img-fluid shadow-sm rounded" width="120px">
+                                @endif
                             </div>
                             <div class="col">
                                 <div class="d-flex flex-column bd-highlight mb-3">
@@ -106,19 +110,22 @@
     </div>
     </div>
 
-    <div class="row justify-content-around mt-5">
+    <div class="row justify-content-center mt-5">
 
-        <div class="col-4">
+        <div class="col-md-5">
+            {{$transaksi->links()}}
+        </div>
+
+    </div>
+    <div class="row justify-content-center mt-2">
+        <div class="col-4 col-xs-auto">
             Halaman {{$transaksi->currentPage()}}
         </div>
-        <div class="col-3">
+        <div class="col-4 col-xs-auto">
             Menampilkan {{$transaksi->count()}}
             Dari {{$transaksi->total()}} data
         </div>
-        <div class="col-2">
-            {{$transaksi->links()}}
-        </div>
-        </div>
+    </div>
 
 
 

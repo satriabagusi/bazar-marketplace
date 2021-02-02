@@ -39,6 +39,6 @@ class DeleteTransaksi extends Command
      */
     public function handle()
     {
-        DB::table('transaksi')->where('created_at', '<=', Carbon::now()->subDay())->delete();
+        DB::table('transaksi')->where('status_transaksi', '=', 0)->where('created_at', '<=', Carbon::now()->subDay())->delete();
     }
 }
