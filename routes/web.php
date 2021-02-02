@@ -90,6 +90,8 @@ Route::group(['superuser' => ['superuser']], function(){
     Route::get('/superuser/dashboard/hapus-akun-pembeli/{pembeli}', 'SuperUserController@__hapusPembeli');
     Route::get('/superuser/dashboard/transaksi/hapus/{transaksi}', 'TransaksiController@destroy');
 
+    Route::get('/superuser/dashboard/transaksi/konfirmasi/{transaksi}', 'TransaksiController@konfirmasiTransaksi');
+
 
 
 });

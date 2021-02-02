@@ -19,7 +19,11 @@
                         <h5 class="border-bottom">Detail Transaksi  <span class="font-weight-bold">#{{$transaksi->kode_transaksi}}</span> </h5>
                         <div class="d-flex flex-column bd-highlight mb-3">
                             <div class="p-2 bd-highlight">
-                                <img class="img-fluid rounded mb-3" src="{{url('/gambar-produk/'.$transaksi->foto_produk->url_foto)}}" width="150px">
+                                @if (empty($transaksi->foto_produk))
+                                    <img class="card-img-top" src="{{url('/gambar-produk/no-image.png')}}" alt=""  class="img-fluid shadow-sm rounded" width="120px"></a>
+                                @else
+                                    <img src="{{url('/gambar-produk/'.$transaksi->foto_produk->url_foto)}}" alt="" class="img-fluid shadow-sm rounded" width="120px">
+                                @endif
                             </div>
                             <div class="p-2 bd-highlight">
                                 <p class="font-weight-bold">Nama Produk</p>

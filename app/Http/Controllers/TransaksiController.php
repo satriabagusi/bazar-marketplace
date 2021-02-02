@@ -354,4 +354,35 @@ class TransaksiController extends Controller
         }
 
     }
+
+    public function konfirmasiTransaksi(Transaksi $transaksi){
+        // return $transaksi;
+
+        if(Auth::guard('superuser')->check()){
+            DB::transaction(function() use($transaksi) {
+                Transaksi::where('id', $transaksi->id)
+                ->update([
+                    'status_transaksi' => 4,
+                ]);
+
+                $poin_pembeli = Transaksi::where('id_pembeli', $transaksi->id_pembeli)->where('status_transaksi', 4)->sum('total_transaksi');
+                $poin_pembeli = floor($poin_pembeli/5000);
+                Pembeli::where('id', $transaksi->id_pembeli)
+                ->update([
+                    'point_pembeli' => $poin_pembeli,
+                ]);
+
+                $poin_merchant = Transaksi::where('id_merchant', $transaksi->id_merchant)->where('status_transaksi', 4)->sum('total_transaksi');
+                $poin_merchant = floor($poin_merchant/200000);
+                Merchant::where('id', $transaksi->id_merchant)
+                ->update([
+                    'point_merchant' => $poin_merchant,
+                ]);
+
+            });
+
+            return redirect('/superusr/dashboard/transaksi')->with('status', 'Transaksi telah dikonfirmasi!');
+        }
+
+    }
 }

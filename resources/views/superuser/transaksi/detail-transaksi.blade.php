@@ -26,7 +26,11 @@
                                 @elseif($item->status_transaksi == 1)
                                     <h6 class="font-weight-bold">Menunggu pengiriman dari Merchant</h6>
                                 @elseif($item->status_transaksi == 2)
+                                    <h6 class="font-weight-bold">Menunggu Konfirmasi Barang diterima Pembeli</h6>
+                                @elseif($item->status_transaksi == 3)
                                     <h6 class="font-weight-bold">Transaksi Selesai</h6>
+                                @elseif($item->status_transaksi == 4)
+                                    <h6 class="font-weight-bold">Transaksi Telah diverifikasi</h6>
                                 @endif
                         </div>
                         <div class="p-2 bd-highlight">
@@ -100,10 +104,11 @@
             </div>
             <div class="card-footer">
                 <div class="d-flex justify-content-end ">
-                    {{-- @if ($item->status_transaksi == 0) --}}
+                    @if ($item->status_transaksi == 3)
+                    <a href="/superuser/dashboard/transaksi/konfirmasi/{{$item->id}}" class="btn btn-outline-info mr-2">Verifikasi Transaksi</a>
+                    @endif
                     <a href="/superuser/dashboard/transaksi/hapus/{{$item->id}}" class="btn btn-outline-danger mr-2">Hapus Transaksi</a>
-                    {{-- @endif --}}
-                    <a href="/merchant/dashboard/transaksi/" class="btn btn-primary">Kembali</a>
+                    <a href="/superuser/dashboard/transaksi/" class="btn btn-primary">Kembali</a>
                 </div>
             </div>
         </div>
@@ -111,14 +116,6 @@
 
     </div>
     </div>
-
-
-
-
-
-
-
-
 
     <div class="modal fade" id="hapusModal" tabindex="-1" aria-labelledby="hapusModalLabel" aria-hidden="true">
         <div class="modal-dialog  modal-dialog-centered">
