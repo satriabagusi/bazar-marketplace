@@ -152,8 +152,8 @@ class ProdukController extends Controller
      */
     public function destroy(Produk $produk)
     {
-        Produk::destroy($produk->id);
-        FotoProduk::destroy('id_produk', $produk->id);
+        Produk::find($produk->id)->delete();
+        FotoProduk::where('id_produk', $produk->id)->delete();
         return back()->with('status', 'Produk '.$produk->nama_produk.' berhasil dihapus !');
     }
 }

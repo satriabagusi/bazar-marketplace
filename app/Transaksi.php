@@ -16,12 +16,12 @@ class Transaksi extends Model
         return $this->belongsTo('App\Merchant', 'id_merchant');
     }
     public function produk(){
-        return $this->belongsTo('App\Produk', 'id_produk');
+        return $this->belongsTo('App\Produk', 'id_produk')->withTrashed();
         // return $this->belongsTo('App\Produk');
     }
 
     public function foto_produk(){
-        return $this->hasOne('App\FotoProduk', 'id_produk', 'id_produk');
+        return $this->hasOne('App\FotoProduk', 'id_produk', 'id_produk')->withTrashed();
     }
 
 

@@ -21,13 +21,15 @@
                         </div>
                         <div class="p-2 bd-highlight">
                             <h6>Status</h6>
-                                @if($item->status_transaksi == 0)
-                                    <h6 class="font-weight-bold">Menunggu pembayaran</h6>
-                                @elseif($item->status_transaksi == 1)
-                                    <h6 class="font-weight-bold">Menunggu pengiriman dari Merchant</h6>
-                                @elseif($item->status_transaksi == 2)
-                                    <h6 class="font-weight-bold">Transaksi Selesai</h6>
-                                @endif
+                            @if($item->status_transaksi == 0)
+                                <h6 class="font-weight-bold">Menunggu pembayaran</h6>
+                            @elseif($item->status_transaksi == 1)
+                                <h6 class="font-weight-bold">Menunggu pengiriman dari Merchant</h6>
+                            @elseif($item->status_transaksi == 2)
+                                <h6 class="font-weight-bold">Menunggu Konfirmasi Barang diterima Pembeli</h6>
+                            @elseif($item->status_transaksi == 3)
+                                <h6 class="font-weight-bold">Transaksi Selesai</h6>
+                            @endif
                         </div>
                         <div class="p-2 bd-highlight">
                             <h6>{{date_format($item->created_at, "d M Y")}}</h6>

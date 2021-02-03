@@ -46,15 +46,17 @@
                     <div class="col">
                         <div class="">
                             <h6>Status</h6>
-                            @if($item->status_transaksi == 0)
-                                <h6 class="font-weight-bold">Menunggu pembayaran</h6>
-                            @elseif($item->status_transaksi == 1)
-                                <h6 class="font-weight-bold">Menunggu pengiriman dari Merchant</h6>
-                            @elseif($item->status_transaksi == 2)
-                                <h6 class="font-weight-bold">Menunggu Konfirmasi Penerimaan produk</h6>
-                            @elseif($item->status_transaksi == 3)
-                                <h6 class="font-weight-bold">Transaksi Selesai</h6>
-                            @endif
+                                @if($item->status_transaksi == 0)
+                                    <h6 class="font-weight-bold">Menunggu pembayaran</h6>
+                                @elseif($item->status_transaksi == 1)
+                                    <h6 class="font-weight-bold">Menunggu pengiriman dari Merchant</h6>
+                                @elseif($item->status_transaksi == 2)
+                                    <h6 class="font-weight-bold">Menunggu Konfirmasi Barang diterima Pembeli</h6>
+                                @elseif($item->status_transaksi == 3)
+                                    <h6 class="font-weight-bold">Transaksi Selesai</h6>
+                                @elseif($item->status_transaksi == 4)
+                                    <h6 class="font-weight-bold">Transaksi Telah diverifikasi</h6>
+                                @endif
                         </div>
                     </div>
                     <div class="col-4 text-right">

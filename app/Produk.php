@@ -3,10 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Produk extends Model
 {
+    use SoftDeletes;
     protected $table = 'produk';
+    protected $dates = ['deleted_at'];
 
     public function merchant(){
         return $this->belongsToMany('App\Merchant');

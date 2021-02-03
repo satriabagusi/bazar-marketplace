@@ -381,7 +381,7 @@ class TransaksiController extends Controller
 
             });
 
-            return redirect('/superusr/dashboard/transaksi')->with('status', 'Transaksi telah dikonfirmasi!');
+            return redirect('/superuser/dashboard/transaksi')->with('status', 'Transaksi telah dikonfirmasi!');
         }
 
     }
