@@ -16,6 +16,8 @@ class KuponPembeliController extends Controller
     {
         if(Auth::guard('pembeli')->check()){
             return view('pembeli.poin.poin');
+        }else{
+            return redirect('/');
         }
     }
 

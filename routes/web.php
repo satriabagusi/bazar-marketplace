@@ -72,7 +72,7 @@ Route::group(['middleware' => ['pembeli']], function () {
     Route::get('/pembeli/dashboard/transaksi/hapus/{transaksi}', 'TransaksiController@destroy');
     Route::get('/pembeli/dashboard/transaksi/terima/{transaksi}', 'TransaksiController@terimaBarang');
 
-    // Route::get('/pembeli/dashboard/poin', 'KuponPembeliController@index');
+    Route::get('/pembeli/dashboard/poin', 'KuponPembeliController@index');
 });
 
 Route::group(['superuser' => ['superuser']], function(){
