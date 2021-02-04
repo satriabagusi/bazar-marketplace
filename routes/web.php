@@ -11,6 +11,7 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', 'PagesController@index');
@@ -70,6 +71,8 @@ Route::group(['middleware' => ['pembeli']], function () {
     Route::post('/pembeli/dashboard/transaksi/konfirmasi/', 'TransaksiController@update');
     Route::get('/pembeli/dashboard/transaksi/hapus/{transaksi}', 'TransaksiController@destroy');
     Route::get('/pembeli/dashboard/transaksi/terima/{transaksi}', 'TransaksiController@terimaBarang');
+
+    // Route::get('/pembeli/dashboard/poin', 'KuponPembeliController@index');
 });
 
 Route::group(['superuser' => ['superuser']], function(){

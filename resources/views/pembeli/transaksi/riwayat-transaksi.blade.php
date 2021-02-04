@@ -10,8 +10,9 @@
     <div class="col">
         <p>Filter Transaksi</p>
         <a href="/pembeli/dashboard/transaksi" class="btn btn-primary">Semua Transaksi</a>
-        <a href="/pembeli/dashboard/transaksi/?status=2" class="btn btn-primary">Transaksi Belum Selesai</a>
-        <a href="/pembeli/dashboard/transaksi/?status=3" class="btn btn-primary">Transaksi Selesai</a>
+        <a href="/pembeli/dashboard/transaksi/?status=1" class="btn btn-primary">Transaksi Belum Selesai</a>
+        <a href="/pembeli/dashboard/transaksi/?status=2" class="btn btn-primary">Transaksi Selesai</a>
+        <a href="/pembeli/dashboard/transaksi/?status=3" class="btn btn-primary">Transaksi Ter-verifikasi</a>
     </div>
 </div>
 
@@ -56,6 +57,8 @@
                                 <h6 class="font-weight-bold">Menunggu Konfirmasi Barang diterima Pembeli</h6>
                             @elseif($item->status_transaksi == 3)
                                 <h6 class="font-weight-bold">Transaksi Selesai</h6>
+                            @elseif($item->status_transaksi == 4)
+                                <h6 class="font-weight-bold">Transaksi Telah diverifikasi</h6>
                             @endif
                         </div>
                     </div>
@@ -111,6 +114,8 @@
                         <button id="terima-produk" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#terimaModal" data-id="{{$item->id}}">Terima Produk</button>
                         @elseif($item->status_transaksi == 3)
                         <button  href="#" disabled class="btn btn-info">Transaksi selesai</button>
+                        @elseif($item->status_transaksi == 4)
+                        <button  href="#" disabled class="btn btn-success">Transaksi Sudah Diverifikasi</button>
                     @endif
                 </div>
             </div>
@@ -123,14 +128,14 @@
     <div class="row justify-content-around mt-5">
 
         <div class="col-4">
+            {{$transaksi->links()}}
+        </div>
+        <div class="col-2">
             Halaman {{$transaksi->currentPage()}}
         </div>
         <div class="col-3">
             Menampilkan {{$transaksi->count()}}
             Dari {{$transaksi->total()}} data
-        </div>
-        <div class="col-2">
-            {{$transaksi->links()}}
         </div>
         </div>
 

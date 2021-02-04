@@ -30,6 +30,7 @@
                                 <th>Bagian</th>
                                 <th>Fungsi</th>
                                 <th>Alamat</th>
+                                <th>Jumlah Poin Pembeli</th>
                                 <th>Pengaturan Akun</th>
                             </tr>
                         </thead>
@@ -42,6 +43,13 @@
                                 <td>{{$item->bagian}}</td>
                                 <td>{{$item->fungsi}}</td>
                                 <td>{{$item->alamat}}</td>
+                                <td style="text-align: center" class="font-weight-bold">
+                                    @if (!$item->point_pembeli)
+                                        0
+                                    @else
+                                        {{$item->point_pembeli}}
+                                    @endif
+                                </td>
                                 <td>
                                     <div class="my-1">
                                         <button id="hapus-pembeli" type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#hapusPembeliModal" data-id="{{$item->id}}">Hapus Akun</button>
@@ -62,14 +70,14 @@
                 <div class="row justify-content-around">
 
                     <div class="col-4">
+                        {{$pembeli->links()}}
+                    </div>
+                    <div class="col-2">
                         Halaman {{$pembeli->currentPage()}}
                     </div>
                     <div class="col-3">
                         Menampilkan {{$pembeli->count()}}
                         Dari {{$pembeli->total()}} data
-                    </div>
-                    <div class="col-2">
-                        {{$pembeli->links()}}
                     </div>
                     </div>
                     @endif

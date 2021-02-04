@@ -30,6 +30,7 @@
                                 <th>Status Merchant</th>
                                 <th>Kategori Merchant</th>
                                 <th>Jenis Merchant</th>
+                                <th>Jumlah Poin Merchant</th>
                                 <th>Pengaturan Akun</th>
                             </tr>
                         </thead>
@@ -48,6 +49,13 @@
                                 </td>
                                 <td>{{$item->kategori_merchant->nama_kategori_merchant}}</td>
                                 <td>{{$item->jenis_merchant->nama_jenis_merchant}}</td>
+                                <td style="text-align: center" class="font-weight-bold">
+                                    @if (!$item->jenis_merchant->point_merchant)
+                                        0
+                                    @else
+                                        {{$item->jenis_merchant->point_merchant}}
+                                    @endif
+                                </td>
                                 <td>
                                     <div class="my-1">
                                         @if ($item->acc_status > 0)
@@ -75,14 +83,14 @@
                 <div class="row justify-content-around">
 
                     <div class="col-4">
+                        {{$merchant->links()}}
+                    </div>
+                    <div class="col-2">
                         Halaman {{$merchant->currentPage()}}
                     </div>
                     <div class="col-3">
                         Menampilkan {{$merchant->count()}}
                         Dari {{$merchant->total()}} data
-                    </div>
-                    <div class="col-2">
-                        {{$merchant->links()}}
                     </div>
                     </div>
                     @endif

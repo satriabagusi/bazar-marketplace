@@ -31,7 +31,9 @@ class SuperUserController extends Controller
         $transaksi_bayar = Transaksi::where('status_transaksi', 0)->count();
         $transaksi_kirim = Transaksi::where('status_transaksi', 1)->count();
         $transaksi_selesai = Transaksi::where('status_transaksi', 3)->count();
-        return view('superuser.dashboard.index', compact('transaksi_count', 'transaksi_bayar', 'transaksi_kirim', 'transaksi_selesai'));
+        $transaksi_verifikasi = Transaksi::where('status_transaksi', 4)->count();
+        $total_transaksi = Transaksi::all()->where('status_transaksi', 3)->sum('total_transaksi');
+        return view('superuser.dashboard.index', compact('transaksi_count', 'transaksi_bayar', 'transaksi_kirim', 'transaksi_selesai', 'transaksi_verifikasi', 'total_transaksi'));
     }
 
     /**

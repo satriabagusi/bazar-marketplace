@@ -57,7 +57,7 @@
 
                 <div class="row mt-5">
                     <div class="col-2">
-                        <p>Nama Pembeli : </p>
+                        <p>Nama Merchant : </p>
                         <p>Alamat Pembeli : </p>
                     </div>
                     <div class="col">

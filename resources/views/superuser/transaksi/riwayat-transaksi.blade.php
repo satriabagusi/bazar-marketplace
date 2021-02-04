@@ -12,6 +12,7 @@
         <a href="/superuser/dashboard/transaksi" class="btn btn-primary">Semua Transaksi</a>
         <a href="/superuser/dashboard/transaksi/?status=1" class="btn btn-primary">Transaksi Belum Selesai</a>
         <a href="/superuser/dashboard/transaksi/?status=2" class="btn btn-primary">Transaksi Selesai</a>
+        <a href="/superuser/dashboard/transaksi/?status=3" class="btn btn-primary">Transaksi Ter-verifikasi</a>
     </div>
 </div>
 

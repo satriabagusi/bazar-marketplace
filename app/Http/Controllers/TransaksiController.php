@@ -37,7 +37,13 @@ class TransaksiController extends Controller
         // return $request->all();
 
         if (Auth::guard('merchant')->check()) {
-            if($request->status == 2){
+            if($request->status == 3){
+                $id_merchant = Auth::guard('merchant')->user()->id;
+                $transaksi = Transaksi::with(['foto_produk', 'produk'])->where('id_merchant', $id_merchant)->where('status_transaksi', '=', 4)->orderBy('created_at', 'desc')->paginate(10);
+                $transaksi->appends($request->only('status'));
+                // return $transaksi;
+                return view('merchant.transaksi.riwayat-transaksi', compact('transaksi'));
+            }elseif($request->status == 2){
                 $id_merchant = Auth::guard('merchant')->user()->id;
                 $transaksi = Transaksi::with(['foto_produk', 'produk'])->where('id_merchant', $id_merchant)->where('status_transaksi', '=', 3)->orderBy('created_at', 'desc')->paginate(10);
                 $transaksi->appends($request->only('status'));
@@ -56,7 +62,13 @@ class TransaksiController extends Controller
                 return view('merchant.transaksi.riwayat-transaksi', compact('transaksi'));
             }
         } elseif(Auth::guard('pembeli')->check()) {
-            if($request->status == 2){
+            if($request->status == 3){
+                $id_pembeli = Auth::guard('pembeli')->user()->id;
+                $transaksi = Transaksi::with(['foto_produk', 'produk'])->where('id_pembeli', $id_pembeli)->where('status_transaksi', '=', 4)->orderBy('created_at', 'desc')->paginate(10);
+                $transaksi->appends($request->only('status'));
+                // return $transaksi;
+                return view('pembeli.transaksi.riwayat-transaksi', compact('transaksi'));
+            }elseif($request->status == 2){
                 $id_pembeli = Auth::guard('pembeli')->user()->id;
                 $transaksi = Transaksi::with(['foto_produk', 'produk'])->where('id_pembeli', $id_pembeli)->where('status_transaksi', '=', 3)->orderBy('created_at', 'desc')->paginate(10);
                 $transaksi->appends($request->only('status'));
@@ -82,6 +94,10 @@ class TransaksiController extends Controller
                 return view('superuser.transaksi.riwayat-transaksi', compact('transaksi'));
             }elseif($request->status == 1 ){
                 $transaksi = Transaksi::orderBy('created_at', 'desc')->where('status_transaksi', '<', 3)->paginate(10);
+                $transaksi->appends($request->only('status'));
+                return view('superuser.transaksi.riwayat-transaksi', compact('transaksi'));
+            }elseif($request->status == 3 ){
+                $transaksi = Transaksi::orderBy('created_at', 'desc')->where('status_transaksi', '=', 4)->paginate(10);
                 $transaksi->appends($request->only('status'));
                 return view('superuser.transaksi.riwayat-transaksi', compact('transaksi'));
             }else{
@@ -359,7 +375,7 @@ class TransaksiController extends Controller
         // return $transaksi;
 
         if(Auth::guard('superuser')->check()){
-            DB::transaction(function() use($transaksi) {
+            // DB::transaction(function() use($transaksi) {
                 Transaksi::where('id', $transaksi->id)
                 ->update([
                     'status_transaksi' => 4,
@@ -379,7 +395,7 @@ class TransaksiController extends Controller
                     'point_merchant' => $poin_merchant,
                 ]);
 
-            });
+            // });
 
             return redirect('/superuser/dashboard/transaksi')->with('status', 'Transaksi telah dikonfirmasi!');
         }

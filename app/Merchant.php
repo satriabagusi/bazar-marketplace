@@ -33,6 +33,10 @@ class Merchant extends Authenticatable
         return $this->hasMany('App\Transaksi', 'id_merchant');
     }
 
+    public function kupon_merchant(){
+        return $this->belongsToMany('App\KuponMerchant', 'id_merchant');
+    }
+
     protected $fillable = [
         'nama_pemilik_merchant',
         'nama_merchant',

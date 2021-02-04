@@ -19,6 +19,10 @@ class Pembeli extends Authenticatable
         return $this->hasMany('App\Transaksi', 'id_pembeli');
     }
 
+    public function kupon_pembeli(){
+        return $this->belongsToMany('App\KuponPembeli', 'id_pembeli');
+    }
+
     protected $fillable = [
         'nama_pembeli',
         'username',
