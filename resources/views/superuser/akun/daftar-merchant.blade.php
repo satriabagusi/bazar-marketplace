@@ -12,6 +12,18 @@
                 <h6 class="m-0 font-weight-bold text-primary">Daftar Merchant</h6>
             </div>
             <div class="card-body px-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-5 col-xs-auto">
+                        <form action="" method="get">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="merchant" placeholder="Cari nama merchant" aria-label="Cari nama merchant" aria-describedby="cari">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-outline-primary" type="button" id="cari"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                     @if (count($merchant) == 0)
                         <div class="row justify-content-center">
                             <div class="col-10">
@@ -27,10 +39,10 @@
                                 <th>Nama Merchant</th>
                                 <th>Nama Pemilik Merchant</th>
                                 <th>No HP Merchant</th>
-                                <th>Status Merchant</th>
                                 <th>Kategori Merchant</th>
                                 <th>Jenis Merchant</th>
                                 <th>Jumlah Poin Merchant</th>
+                                <th>Status Merchant</th>
                                 <th>Pengaturan Akun</th>
                             </tr>
                         </thead>
@@ -40,20 +52,16 @@
                                 <td>{{$item->nama_merchant}}</td>
                                 <td>{{$item->nama_pemilik_merchant}}</td>
                                 <td>{{$item->no_hp_merchant}}</td>
+                                <td>{{$item->kategori_merchant->nama_kategori_merchant}}</td>
+                                <td>{{$item->jenis_merchant->nama_jenis_merchant}}</td>
+                                <td style="text-align: center" class="font-weight-bold">
+                                    {{$item->jenis_merchant->point_merchant}}
+                                </td>
                                 <td>
                                     @if ($item->acc_status > 0)
                                         <p>Akun sudah diaktivasi</p>
                                     @else
                                         <p>Akun belum diaktivasi</p>
-                                    @endif
-                                </td>
-                                <td>{{$item->kategori_merchant->nama_kategori_merchant}}</td>
-                                <td>{{$item->jenis_merchant->nama_jenis_merchant}}</td>
-                                <td style="text-align: center" class="font-weight-bold">
-                                    @if (!$item->jenis_merchant->point_merchant)
-                                        0
-                                    @else
-                                        {{$item->jenis_merchant->point_merchant}}
                                     @endif
                                 </td>
                                 <td>

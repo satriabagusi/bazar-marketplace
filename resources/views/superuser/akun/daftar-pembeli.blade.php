@@ -12,6 +12,18 @@
                 <h6 class="m-0 font-weight-bold text-primary">Daftar Pembeli</h6>
             </div>
             <div class="card-body px-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-5 col-xs-auto">
+                        <form action="" method="get">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="pembeli" placeholder="Cari nama pembeli" aria-label="Cari nama pembeli" aria-describedby="cari">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-outline-primary" type="button" id="cari"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                     @if (count($pembeli) == 0)
                         <div class="row justify-content-center">
                             <div class="col-10">

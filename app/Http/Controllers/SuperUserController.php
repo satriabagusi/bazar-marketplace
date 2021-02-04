@@ -188,22 +188,34 @@ class SuperUserController extends Controller
         }
     }
 
-    public function daftarMerchant(){
-        $merchant = Merchant::paginate(15);
+    public function daftarMerchant(Request $request){
         // return $merchant;
+        // return $request->all();
         if(Auth::guard('superuser')->check()){
-            return view('superuser.akun.daftar-merchant', compact('merchant'));
+            if ($request) {
+                $merchant = Merchant::where('nama_merchant', 'like',"%".$request->merchant."%" )->paginate(15);
+                return view('superuser.akun.daftar-merchant', compact('merchant'));
+            } else {
+                $merchant = Merchant::paginate(15);
+                return view('superuser.akun.daftar-merchant', compact('merchant'));
+            }
+
         }else{
             return redirect('/superuser/login');
         }
     }
 
-    public function daftarPembeli(){
-        $pembeli = Pembeli::paginate(15);
+    public function daftarPembeli(Request $request){
         // return $merchant;
         if(Auth::guard('superuser')->check()){
-            // return $pembeli;
-            return view('superuser.akun.daftar-pembeli', compact('pembeli'));
+            if ($request) {
+                $pembeli = Pembeli::where('nama_pembeli', 'like',"%".$request->pembeli."%" )->paginate(15);
+                return view('superuser.akun.daftar-pembeli', compact('pembeli'));
+            } else {
+                $pembeli = Pembeli::paginate(15);
+                return view('superuser.akun.daftar-pembeli', compact('pembeli'));
+            }
+
         }else{
             return redirect('/superuser/login');
         }

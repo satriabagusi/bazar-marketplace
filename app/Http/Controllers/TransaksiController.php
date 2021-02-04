@@ -35,7 +35,6 @@ class TransaksiController extends Controller
     public function index(Request $request)
     {
         // return $request->all();
-
         if (Auth::guard('merchant')->check()) {
             if($request->status == 3){
                 $id_merchant = Auth::guard('merchant')->user()->id;
