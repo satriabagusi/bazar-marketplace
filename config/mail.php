@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'driver' => env('MAIL_DRIVER', 'smtp'),
+    'driver' => env('MAIL_DRIVER', 'mail'),
 
     /*
     |--------------------------------------------------------------------------
@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'mail.bazokaaa-ru6.com'),
+    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
 
     /*
     |--------------------------------------------------------------------------
@@ -57,7 +57,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'admin@bazokaaa-ru6.com'),
-        'name' => env('MAIL_FROM_NAME', 'ADMIN Bazar Online UMKM, Pekerja, Mitra, Binaan RU VI'),
+        'name' => env('MAIL_FROM_NAME', 'NO-REPLY ADMIN BAZAR ONLINE UMKM, PEKERJA, MITRA, BINAAN RU VI BALONGAN'),
     ],
 
     /*

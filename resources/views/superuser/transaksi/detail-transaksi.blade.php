@@ -43,7 +43,11 @@
             <div class="card-body">
                 <div class="row justify-content-between">
                     <div class="col-3">
+                        @if (empty($item->foto_produk))
+                        <img src="{{url('/gambar-produk/no-image.png')}}" alt="" class="img-fluid shadow-sm rounded" width="250px">
+                        @else
                         <img src="{{url('/gambar-produk/'.$item->foto_produk->url_foto)}}" alt="" class="img-fluid shadow-sm rounded" width="250px">
+                        @endif
                     </div>
                     <div class="col-4">
                         <p>Nama Produk</p>

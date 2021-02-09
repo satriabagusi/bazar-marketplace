@@ -76,17 +76,13 @@
                                 <li class="text-secondary font-weight-bold ">Tukarkan 70 Poin untuk mendapatkan kesempatan Doorprizes ke-4</li>
                                 <li class="text-secondary font-weight-bold ">Tukarkan 80 Poin untuk mendapatkan kesempatan Doorprizes ke-3</li>
                                 <li class="text-secondary font-weight-bold ">Tukarkan 90 Poin untuk mendapatkan kesempatan Doorprizes ke-2</;>
-                                <li class="text-secondary font-weight-bold ">Tukarkan 100 Poin untuk mendapatkan kesempatan Doorprizes UTAMA</li>
+                                <li class="text-secondary font-weight-bold ">Tukarkan 90 Poin untuk mendapatkan kesempatan Doorprizes UTAMA</li>
                             </ul>
 
                             @endif
                         </div>
                     </div>
-                    @if (Auth::guard('merchant')->check())
-                        <a class="dropdown-item bg-primary text-light text-center foint-weight-bold" href="/">Tukar Poin</a>
-                    @elseif(Auth::guard('pembeli')->check())
-                        <a class="dropdown-item bg-primary text-light text-center foint-weight-bold" href="/pembeli/dashboard/poin">Tukar Poin</a>
-                    @endif
+                    <a class="dropdown-item bg-primary text-light text-center foint-weight-bold" href="#">Tukar Poin</a>
                 </div>
         </div>
         @endif

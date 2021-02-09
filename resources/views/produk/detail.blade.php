@@ -52,9 +52,8 @@
                     <h1 class="">{{$produk->nama_produk}}</h1>
                 </div>
                 <div class="my-1">
-                    <h5 class="text-primary font-weight-bold">Rp{{number_format($produk->harga, 0, '.', '.')}}</h5>
-                    <small class="text-muted">Dapatkan <span id="total_poin" class="text-info font-weight-bold">7</span>  Poin dari transaksi ini</small>
-                </div>
+                    <h5 class="text-primary font-weight-bold">Rp{{number_format($produk->harga, 0, '.', '.')}}</h5>                
+		</div>
                 <div class="my-1">
                     @if ($produk->stock > 0)
                     <h5 >Stock : <span class="font-weight-bold" id="stock">{{$produk->stock}}</span></h5>

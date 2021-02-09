@@ -6,6 +6,8 @@
 @section('content')
 <!-- Earnings (Monthly) Card Example -->
 
+
+
 <div class="row mb-5">
     <div class="col">
         <p>Filter Transaksi</p>
@@ -15,6 +17,17 @@
         <a href="/superuser/dashboard/transaksi/?status=3" class="btn btn-primary">Transaksi Ter-verifikasi</a>
     </div>
 </div>
+
+
+@if (Auth::guard('superuser')->user()->id == 1)
+<div class="row mb-4 justify-content-end">
+    <div class="col-sm-4 col-xs-auto">
+        <a href="/superuser/transaksi/export" class="btn btn-sm btn-success rounded"><i class="fas fa-file-download"></i> Export to Excel</a>
+    </div>
+</div>
+
+@endif
+
 
 
     @if (count($transaksi) == 0)

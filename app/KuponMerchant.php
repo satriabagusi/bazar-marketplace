@@ -12,7 +12,7 @@ class KuponMerchant extends Model
         return $this->hasMany('App\Merchant', 'id_merchant');
     }
 
-    protected $fillabel = [
+    protected $fillable = [
         'kode_voucher',
         'id_merchant',
     ];

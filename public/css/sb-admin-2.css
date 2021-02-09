@@ -10848,7 +10848,7 @@ a:focus {
 }
 
 .bg-password-image {
-  background: url("/img/reset.jpg");
+  background: url("https://source.unsplash.com/oWTW-jNGl9I/600x800");
   background-position: center;
   background-size: cover;
 }

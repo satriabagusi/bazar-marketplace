@@ -13,6 +13,7 @@
             </div>
             <div class="card-body px-5">
                 <div class="row justify-content-center">
+
                     <div class="col-md-5 col-xs-auto">
                         <form action="" method="get">
                             <div class="input-group mb-3">

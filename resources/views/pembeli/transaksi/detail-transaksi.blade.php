@@ -41,8 +41,12 @@
             <div class="card-body">
                 <div class="row justify-content-between">
                     <div class="col-3">
+			@if(empty($item->foto_produk))
+			<img src="{{url('/gambar-produk/no-image.png')}}" alt="" class="img-fluid shadow-sm rounded" width="250px">
+			@else
                         <img src="{{url('/gambar-produk/'.$item->foto_produk->url_foto)}}" alt="" class="img-fluid shadow-sm rounded" width="250px">
-                    </div>
+                    	@endif
+			</div>
                     <div class="col-4">
                         <p>Nama Produk</p>
                         <a href="/produk/detail/{{$item->id_produk}}" target="_blank" rel="noopener noreferrer" class="text-decoration-none font-weight-bold"><h4>{{ $item->produk->nama_produk}}</h4></a>
@@ -51,8 +55,10 @@
 
                     </div>
                     <div class="col-4">
-                        Harga Produk :  <span class="text-info font-weight-bold">Rp {{ number_format($item->produk->harga, 0 , ".", ".")}}
-                    </div>
+                        Harga Produk :  <span class="text-info font-weight-bold">Rp {{ number_format($item->produk->harga, 0 , ".", ".")}} </span>
+                        <br>
+                        Jumlah Pesanan : {{$item->total_produk}}			
+		</div>
                 </div>
 
                 <div class="row mt-5">

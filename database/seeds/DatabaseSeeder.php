@@ -16,6 +16,5 @@ class DatabaseSeeder extends Seeder
         $this->call(KategoriPembeliSeeder::class);
         $this->call(KategoriPenjualSeeder::class);
         $this->call(JenisMerchantSeeder::class);
-        $this->call(JenisKuponPembeliSeeder::class);
     }
 }

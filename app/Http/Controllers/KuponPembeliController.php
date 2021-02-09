@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\JenisKuponPembeli;
+use App\KuponPembeli;
+use App\Pembeli;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class KuponPembeliController extends Controller
 {
@@ -15,7 +19,12 @@ class KuponPembeliController extends Controller
     public function index()
     {
         if(Auth::guard('pembeli')->check()){
-            return view('pembeli.poin.poin');
+            $id_pembeli = Auth::guard('pembeli')->user()->id;
+            $kupon_pembeli = KuponPembeli::where('id_pembeli', $id_pembeli)->paginate(9);
+            // return $kupon_pembeli;
+            return view('pembeli.poin.poin', compact('kupon_pembeli'));
+        }elseif(Auth::guard('merchant')->check()){
+            return view('merchant.poin.poin');
         }else{
             return redirect('/');
         }
@@ -39,7 +48,46 @@ class KuponPembeliController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (Auth::guard('pembeli')->check()) {
+            // return $request->id_jenis_kupon;
+            $kode = sprintf("%03d", rand(1, 500));
+            $kode_exist = KuponPembeli::where('kode_kupon', $kode)->first();
+            $poin_kupon = JenisKuponPembeli::select('poin')->find($request->id_jenis_kupon)->poin;
+
+            if ($kode_exist) {
+                $kode = sprintf("%03d", rand(1, 500));
+
+                DB::transaction(function () use($kode, $request, $poin_kupon) {
+                    KuponPembeli::create([
+                        'kode_kupon' => $kode,
+                        'id_pembeli' => $request->id_pembeli,
+                        'id_jenis_kupon' => $request->id_jenis_kupon,
+                    ]);
+
+                    DB::table('pembeli')->decrement('point_pembeli', $poin_kupon);
+
+                });
+
+                return redirect('/pembeli/dashboard/poin');
+
+            } else {
+
+                DB::transaction(function () use($kode, $request, $poin_kupon) {
+                    KuponPembeli::create([
+                        'kode_kupon' => $kode,
+                        'id_pembeli' => $request->id_pembeli,
+                        'id_jenis_kupon' => $request->id_jenis_kupon,
+                    ]);
+
+                    DB::table('pembeli')->decrement('point_pembeli', $poin_kupon);
+                });
+                return redirect('/pembeli/dashboard/poin');
+            }
+
+        } else {
+            return redirect('/');
+        }
+
     }
 
     /**

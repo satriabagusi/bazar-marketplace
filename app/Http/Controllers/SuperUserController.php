@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TransaksiExport;
 use App\Merchant;
 use App\Pembeli;
 use App\Produk;
@@ -11,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class SuperUserController extends Controller
 {
@@ -32,7 +35,7 @@ class SuperUserController extends Controller
         $transaksi_kirim = Transaksi::where('status_transaksi', 1)->count();
         $transaksi_selesai = Transaksi::where('status_transaksi', 3)->count();
         $transaksi_verifikasi = Transaksi::where('status_transaksi', 4)->count();
-        $total_transaksi = Transaksi::all()->where('status_transaksi', 3)->sum('total_transaksi');
+        $total_transaksi = Transaksi::all()->where('status_transaksi', '>' ,  3)->sum('total_transaksi');
         return view('superuser.dashboard.index', compact('transaksi_count', 'transaksi_bayar', 'transaksi_kirim', 'transaksi_selesai', 'transaksi_verifikasi', 'total_transaksi'));
     }
 
@@ -233,5 +236,10 @@ class SuperUserController extends Controller
         Transaksi::where('id_pembeli', $pembeli->id)->delete();
         Pembeli::destroy($pembeli->id);
         return back()->with('status', 'Merchant '.$pembeli->nama_pembeli.' berhasil dihapus !');
+    }
+
+    public function exportTransaksi(){
+
+        return Excel::download(new TransaksiExport, 'transaksi_bazokaaa-ru6.xlsx');
     }
 }

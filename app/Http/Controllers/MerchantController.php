@@ -113,14 +113,6 @@ class MerchantController extends Controller
 
     public function login(){
         if(Auth::guard('merchant')->check()){
-            $merchant = Merchant::where('id', Auth::guard('merchant')->user()->id)->first();
-            // return $merchant;
-            $poin = Transaksi::where('id_merchant', $merchant->id)->where('status_transaksi', 3)->sum('total_transaksi');
-            $poin = floor($poin/200000);
-            Merchant::where('id', $merchant->id)
-                    ->update([
-                        'point_merchant_pending' => $poin,
-                    ]);
             return redirect('/merchant/dashboard');
         }else{
             return view('merchant.login');
@@ -229,7 +221,7 @@ class MerchantController extends Controller
             try{
                 $pesan = '<b>Permintaan Reset Password</b><br>
                             Klik link untuk mengakses Reset Password<br>
-                            <a href='.env('APP_URL').'/merchant/reset-password/token='.$request->token.'>Reset Password</a>';
+                            <a href=https://www.bazokaaa-ru6.com/merchant/reset-password/token='.$request->token.'>Reset Password</a>';
                 Mail::send([], [], function ($message) use($pesan, $request) {
                     $message->to($request->email)
                     ->subject('Permintaan Reset Password')

@@ -99,10 +99,8 @@
                         <h6 class="collapse-header">Manage Transaksi :</h6>
                         @if (Auth::guard('merchant')->check())
                             <a class="collapse-item @yield('riwayat-transaksi')" href="/merchant/dashboard/transaksi">Riwayat Transaksi</a>
-                            <a class="collapse-item @yield('tukar-poin')" href="#">Tukar Poin</a>
                         @elseif(Auth::guard('pembeli')->check())
                             <a class="collapse-item @yield('riwayat-transaksi')" href="/pembeli/dashboard/transaksi">Riwayat Transaksi</a>
-                            <a class="collapse-item @yield('tukar-poin')" href="#">Tukar Poin</a>
                         @elseif(Auth::guard('superuser')->check())
                             <a class="collapse-item @yield('riwayat-transaksi')" href="/superuser/dashboard/transaksi">Daftar Transaksi</a>
                         @endif
@@ -114,6 +112,28 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider">
+
+            <li class="nav-item @yield('kupon')">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKupon"
+                aria-expanded="true" aria-controls="collapseKupon">
+                <i class="fas fa-receipt"></i>
+                <span>Poin</span>
+            </a>
+                <div id="collapseKupon" class="collapse" aria-labelledby="headingUtilities"
+                data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Manage Transaksi :</h6>
+                    @if (Auth::guard('merchant')->check())
+                        <a class="collapse-item @yield('tukar-poin')" href="/merchant/dashboard/tukar-poin">Tukar Poin</a>
+                        <a class="collapse-item @yield('daftar-kupon')" href="/merchant/dashboard/poin">Kupon Dimiliki</a>
+                    @elseif(Auth::guard('pembeli')->check())
+                        <a class="collapse-item @yield('tukar-poin')" href="/pembeli/dashboard/tukar-poin">Tukar Poin</a>
+                        <a class="collapse-item @yield('daftar-kupon')" href="/pembeli/dashboard/poin">Kupon dimiliki</a>
+                    @endif
+                        </div>
+                    </div>
+                </li>
+                {{-- <hr class="sidebar-divider"> --}}
 
             {{-- <!-- Heading -->
             <div class="sidebar-heading">

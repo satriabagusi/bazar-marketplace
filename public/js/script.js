@@ -18,7 +18,7 @@ $(document).ready(function(){
 
     var stock = $('#jumlahPesanan').val();
     var total_transaksi = $('#total_transaksi').cleanVal();
-    var max_stock = $('#stock').html();
+    var max_stock = 10;
     $("#tambah_stock").click(function(){
         stock++;
         let total = total_transaksi * stock;
@@ -97,7 +97,6 @@ $(document).ready(function(){
 
     $('#aktivasiModal').on('show.bs.modal', function (event) {
         var id = $(event.relatedTarget).data('id');
-        console.log(id);
         $(this).find("#btn-aktivasi").attr('href', '/superuser/dashboard/aktivasi/'+id);
       });
 
@@ -107,7 +106,6 @@ $(document).ready(function(){
 
     $('#nonAktifModal').on('show.bs.modal', function (event) {
         var id = $(event.relatedTarget).data('id');
-        console.log(id);
         $(this).find("#btn-aktivasi").attr('href', '/superuser/dashboard/nonaktif/'+id);
       });
 
@@ -117,19 +115,11 @@ $(document).ready(function(){
 
     $('#hapusAkunModal').on('show.bs.modal', function (event) {
         var id = $(event.relatedTarget).data('id');
-        $(this).find("#btn-hapus").attr('href', '/superuser/dashboard/hapus-akun/'+id);
+        $(this).find("#btn-aktivasi").attr('href', '/superuser/dashboard/hapus-akun/'+id);
       });
 
 });
 
-$(document).ready(function(){
-
-    $('#hapusPembeliModal').on('show.bs.modal', function (event) {
-        var id = $(event.relatedTarget).data('id');
-        $(this).find("#btn-hapus").attr('href', '/superuser/dashboard/hapus-akun-pembeli/'+id);
-      });
-
-});
 
 
 $(document).ready(function(){

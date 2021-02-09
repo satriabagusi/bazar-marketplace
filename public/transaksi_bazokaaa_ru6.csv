@@ -1,0 +1,5 @@
+"No Transaksi","Nama Produk","Nama Merchant","Nama Pembeli","Jumlah Pembelian","Harga Produk","Total Transaksi","Tanggal Transaksi","Status Transaksi"
+,"Beras Idola 5kg",PatraMart,Admin,1,99000,99000,31/01/2021,"Transaksi sudah di Verifikasi"
+,Tumbler,"ADMIN TEST",Admin,1,45000,45000,01/02/2021,"Transaksi belum di Verifikasi"
+,"Sirwal Loreng Nauhtec","Sirwal Indramayu Shop",Admin,3,150000,450000,06/02/2021,"Transaksi belum di Verifikasi"
+,Tumbler,"ADMIN TEST",Admin,1,75000,75000,06/02/2021,"Transaksi belum di Verifikasi"

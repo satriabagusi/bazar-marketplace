@@ -11,8 +11,9 @@
 |
 */
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'PagesController@index');
 
@@ -46,6 +47,10 @@ Route::group(['middleware' => ['merchant']], function () {
     Route::get('/merchant/dashboard/transaksi/konfirmasi/{transaksi}', 'TransaksiController@edit');
     Route::get('/merchant/dashboard/transaksi/hapus/{transaksi}', 'TransaksiController@destroy');
 
+    Route::get('/merchant/dashboard/poin', 'KuponMerchantController@index');
+    Route::get('/merchant/dashboard/tukar-poin', 'KuponMerchantController@create');
+    Route::post('/merchant/dashboard/tukar-poin/claim', 'KuponMerchantController@store');
+
 
 });
 
@@ -73,6 +78,8 @@ Route::group(['middleware' => ['pembeli']], function () {
     Route::get('/pembeli/dashboard/transaksi/terima/{transaksi}', 'TransaksiController@terimaBarang');
 
     Route::get('/pembeli/dashboard/poin', 'KuponPembeliController@index');
+    Route::get('/pembeli/dashboard/tukar-poin', 'JenisKuponPembeliController@index');
+    Route::post('/pembeli/dashboard/tukar-poin/claim', 'KuponPembeliController@store');
 });
 
 Route::group(['superuser' => ['superuser']], function(){
@@ -94,6 +101,8 @@ Route::group(['superuser' => ['superuser']], function(){
     Route::get('/superuser/dashboard/transaksi/hapus/{transaksi}', 'TransaksiController@destroy');
 
     Route::get('/superuser/dashboard/transaksi/konfirmasi/{transaksi}', 'TransaksiController@konfirmasiTransaksi');
+
+    Route::get('/superuser/transaksi/export', 'SuperUserController@exportTransaksi');
 
 
 
@@ -127,5 +136,16 @@ Route::get('/clear-cache', function() {
     Artisan::call('route:clear');
     // return what you want
     return redirect('/');
+});
+
+Route::get('/migrate-database', function(){
+
+    if(Auth::guard('superuser')->check()){
+        $migrate = Artisan::call('migrate');
+        return $migrate;
+    }else{
+        return redirect('/');
+    }
+
 });
 

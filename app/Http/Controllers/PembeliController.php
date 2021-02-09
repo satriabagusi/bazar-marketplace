@@ -99,15 +99,6 @@ class PembeliController extends Controller
 
     public function login(){
         if(Auth::guard('pembeli')->check()){
-            $pembeli = Pembeli::where('id', Auth::guard('pembeli')->user()->id)->first();
-            // return $pembeli->id;
-            $poin = Transaksi::where('id_pembeli', $pembeli->id)->where('status_transaksi', 3)->sum('total_transaksi');
-            $poin = floor($poin/5000);
-            // return $poin;
-            Pembeli::where('id', $pembeli->id)
-                    ->update([
-                        'point_pembeli_pending' => $poin,
-                    ]);
             return redirect('/pembeli/dashboard');
         }else{
             return view('pembeli.login');
@@ -214,7 +205,7 @@ class PembeliController extends Controller
             try{
                 $pesan = '<b>Permintaan Reset Password</b><br>
                             Klik link untuk mengakses Reset Password<br>
-                            <a href='.env('APP_URL').'/pembeli/reset-password/token='.$request->token.'>Reset Password</a>';
+                            <a href=https://www.bazokaaa-ru6.com/pembeli/reset-password/token='.$request->token.'>Reset Password</a>';
                 Mail::send([], [], function ($message) use($pesan, $request) {
                     $message->to($request->email)
                     ->subject('Permintaan Reset Password')

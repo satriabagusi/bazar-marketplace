@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\JenisKuponPembeli;
+use App\KuponMerchant;
+use App\KuponPembeli;
 use App\Merchant;
 use App\Pembeli;
 use App\Produk;
@@ -133,7 +136,7 @@ class TransaksiController extends Controller
             // return $request->all();
         $produk = Produk::select('nama_produk')->where('id', $request->id)->first();
         $merchant = Merchant::select('nama_merchant','no_hp_merchant')->where('id', $request->id_merchant)->first();
-
+        $harga = Produk::select('harga')->where('id', $request->id)->first();
         $total = str_replace(".", "", $request['total_transaksi']);
         // return floor($total/5000);
 
@@ -148,7 +151,7 @@ class TransaksiController extends Controller
         }
 
         $merchant = Merchant::find($request->id_merchant);
-        DB::transaction(function() use($request, $produk, $no_transaksi, $total) {
+        DB::transaction(function() use($request, $produk, $no_transaksi, $harga) {
 
 
 
@@ -157,7 +160,7 @@ class TransaksiController extends Controller
                 'pesan' => $request->pesan,
                 'status_transaksi' => 0,
                 'total_produk' => $request->total_produk,
-                'total_transaksi' => $total,
+                'total_transaksi' => $harga->harga*$request->total_produk,
                 'id_produk' => $request->id_produk,
                 'id_pembeli' => $request->id_pembeli,
                 'id_merchant' => $request->id_merchant
@@ -375,20 +378,30 @@ class TransaksiController extends Controller
 
         if(Auth::guard('superuser')->check()){
             // DB::transaction(function() use($transaksi) {
+
+
+                $poin_kupon_pembeli = KuponPembeli::withCount(['jenis_kupon_pembeli' => function($query) {
+                    $query->select('poin');
+                }])->where('id_pembeli', $transaksi->id_pembeli)->get();
+                $poin_kupon_pembeli = $poin_kupon_pembeli->sum('jenis_kupon_pembeli_count');
+
+                $poin_kupon_merchant = KuponMerchant::where('id_merchant', $transaksi->id_merchant)->count();
+                $poin_kupon_merchant = $poin_kupon_merchant * 25;
+
                 Transaksi::where('id', $transaksi->id)
                 ->update([
                     'status_transaksi' => 4,
                 ]);
 
                 $poin_pembeli = Transaksi::where('id_pembeli', $transaksi->id_pembeli)->where('status_transaksi', 4)->sum('total_transaksi');
-                $poin_pembeli = floor($poin_pembeli/5000);
+                $poin_pembeli = floor($poin_pembeli/5000) - $poin_kupon_pembeli;
                 Pembeli::where('id', $transaksi->id_pembeli)
                 ->update([
                     'point_pembeli' => $poin_pembeli,
                 ]);
 
                 $poin_merchant = Transaksi::where('id_merchant', $transaksi->id_merchant)->where('status_transaksi', 4)->sum('total_transaksi');
-                $poin_merchant = floor($poin_merchant/200000);
+                $poin_merchant = floor($poin_merchant/200000) - $poin_kupon_merchant;
                 Merchant::where('id', $transaksi->id_merchant)
                 ->update([
                     'point_merchant' => $poin_merchant,

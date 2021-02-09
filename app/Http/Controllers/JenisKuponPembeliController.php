@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\JenisKuponPembeli;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JenisKuponPembeliController extends Controller
 {
@@ -13,7 +15,12 @@ class JenisKuponPembeliController extends Controller
      */
     public function index()
     {
-        //
+        if(Auth::guard('pembeli')->check()){
+            $jeniskupon = JenisKuponPembeli::all();
+            return view('pembeli.poin.tukar-poin', compact('jeniskupon'));
+        }else{
+            return redirect('/');
+        }
     }
 
     /**
